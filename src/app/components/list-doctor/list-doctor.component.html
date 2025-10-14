@@ -1,0 +1,40 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="titulo">LISTADO DE DOCTORES</span>
+                    <button class="btn btn-success float-end" routerLink="/create-doctor">Nuevo</button>
+                    <table *ngIf="listDoctores.length > 0" class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Doctor</th>
+                                <th scope="col">Especialidad</th>
+                                <th scope="col">Estado de Atención</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let doctor of listDoctores">
+                                <td> {{ doctor.nombredoctor}}</td>
+                                <td>{{ doctor.especialidad}}</td>
+                                <td [ngClass]="{
+                                                'text-danger': doctor.estado === 'Inactivo',
+                                                'text-success': doctor.estado === 'Activo'
+                                                }">
+                                {{ doctor.estado}}
+                            </td>
+                                <td>
+                                    <i (click) = "eliminarDoctor(doctor._id)" class="fas fa-solid fa-trash"></i>
+                                    <i [routerLink]="['/edit-doctor',doctor._id]" class="fas fa-solid fa-pen-to-square"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="listDoctores.length == 0"> No hay doctores para mostrar</h5>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

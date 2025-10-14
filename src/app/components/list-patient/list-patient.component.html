@@ -1,0 +1,68 @@
+<!-- filtros -->
+<div class="container mt-5">
+<div class="row mt-3 mb-3 justify-content-center">
+    <div class="col-md-4">
+        <label class="mb-2">Especialidad:</label>
+        <select class="form-select" [(ngModel)]="filtroEspecialidad">
+            <option value="">Todas las especialidades</option>
+            <option *ngFor="let esp of especialidades" [value]="esp">{{ esp }}</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <label class="mb-2">Estado:</label>
+        <select class="form-select" [(ngModel)]="filtroEstado">
+            <option value="">Todos los estados</option>
+            <option value="En espera">En espera</option>
+            <option value="Atendido">Atendido</option>
+        </select>
+    </div>
+</div>
+</div>
+
+<!-- toda la lista -->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="titulo">LISTADO DE PACIENTES</span>
+                    <button class="btn btn-success float-end" routerLink="/create-patient">Nuevo</button>
+                    <table *ngIf="listPacientes.length > 0" class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Especialidad</th>
+                                <th scope="col">Estado de Atención</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let paciente of pacientesFiltrados()">
+                                <!-- <tr *ngFor="let paciente of listPacientes"> -->
+                                <td> {{ paciente.nombrepaciente}}</td>
+                                <td>{{ paciente.especialidadpaciente}}</td>
+                                <!-- <td>{{ paciente.estadopaciente}}</td> -->
+                                <td [ngClass]="{
+                                                'text-danger': paciente.estadopaciente === 'En espera',
+                                                'text-success': paciente.estadopaciente === 'Atendido'
+                                                }">
+                                    {{ paciente.estadopaciente }}
+                                </td>
+
+
+                                <td>
+                                    <i (click)="eliminarPaciente(paciente._id)" class="fas fa-solid fa-trash"></i>
+                                    <i [routerLink]="['/edit-patient',paciente._id]"
+                                        class="fas fa-solid fa-pen-to-square"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="listPacientes.length == 0"> No hay pacientes
+                        para mostrar</h5>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

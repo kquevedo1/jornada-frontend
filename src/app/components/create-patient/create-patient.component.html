@@ -1,0 +1,222 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="titulo">CREAR PACIENTE</span>
+                    <!-- para conectas los formularios -->
+                    <form class="mt-3" [formGroup]="patientForm" (ngSubmit)="agregarPaciente()">
+                        <!-- Nombre -->
+                        <div class="mb-3">
+                            <input type="text" formControlName="nombrepaciente" class="form-control form-control-lg"
+                                placeholder="Nombre">
+                            <div class="text-danger"
+                                *ngIf="patientForm.get('nombrepaciente')?.hasError('required') && patientForm.get('nombrepaciente')?.touched">
+                                <span>El nombre del paciente <strong>es obligatorio*</strong></span>
+                            </div>
+                        </div>
+                        <!-- Edad -->
+                        <div class="mb-3">
+                            <input type="text" formControlName="edad" class="form-control form-control-lg"
+                                placeholder="Edad">
+                            <div class="text-danger"
+                                *ngIf="patientForm.get('edad')?.hasError('required') && patientForm.get('edad')?.touched">
+                                <span>La edad <strong>es obligatoria*</strong></span>
+                            </div>
+                        </div>
+                        <!-- Especialidad a atender -->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Seleccione especialidad de la cual desea ser atendido:</label>
+                            <select class="form-select form-control form-control-lg"
+                                formControlName="especialidadpaciente">
+                                <option value="Medico General">Medico General</option>
+                                <option value="Psicología">Psicología</option>
+                                <option value="Nutrición">Nutrición</option>
+                                <option value="Dentista">Dentista</option>
+                            </select>
+                        </div>
+                        <!-- Sexo -->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Sexo:</label>
+                            <div class="form-check d-flex mb-2">
+                                <input class="form-check-input me-2" type="radio" formControlName="sexo"
+                                    value="Masculino" id="radioMasculino">
+                                <label class="form-check-label" for="radioMasculino">Masculino</label>
+                            </div>
+                            <div class="form-check d-flex mb-2">
+                                <input class="form-check-input me-2" type="radio" formControlName="sexo"
+                                    value="Femenino" id="radioFemenino">
+                                <label class="form-check-label" for="radioFemenino">Femenino</label>
+                            </div>
+                        </div>
+                        <!-- Profesion -->
+                        <div class="mb-3">
+                            <input type="text" formControlName="profesion" class="form-control form-control-lg"
+                                placeholder="Profesion/Ocupación">
+                            <div class="text-danger"
+                                *ngIf="patientForm.get('profesion')?.hasError('required') && patientForm.get('profesion')?.touched">
+                                <span>La profesión del paciente <strong>es obligatorio*</strong></span>
+                            </div>
+                        </div>
+                        <!-- Religion -->
+                        <div class="mb-3">
+                            <input type="text" formControlName="religion" class="form-control form-control-lg"
+                                placeholder="Religión">
+                            <div class="text-danger"
+                                *ngIf="patientForm.get('religion')?.hasError('required') && patientForm.get('religion')?.touched">
+                                <span>La religión del paciente <strong>es obligatorio*</strong></span>
+                            </div>
+                        </div>
+                        <!-- Escolaridad -->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Escolaridad:</label>
+                            <select class="form-select form-control form-control-lg" formControlName="escolaridad">
+                                <option value="Primaria">Primaria</option>
+                                <option value="Diversificado">Diversificado</option>
+                                <option value="Universitario">Universitario</option>
+                                <option value="No Aplica">No Aplica</option>
+                            </select>
+                        </div>
+                        <!-- Telefono -->
+                        <div class="mb-3">
+                            <input type="text" formControlName="telefono" class="form-control form-control-lg"
+                                placeholder="Telefono">
+                            <div class="text-danger"
+                                *ngIf="patientForm.get('telefono')?.hasError('required') && patientForm.get('telefono')?.touched">
+                                <span>El telefono del paciente <strong>es obligatorio*</strong></span>
+                            </div>
+                        </div>
+                        <!-- A quien pertenece el telefono -->
+                        <div class="mb-3">
+                            <input type="text" formControlName="duenotelefono" class="form-control form-control-lg"
+                                placeholder="¿A quien pertenece el telefono brindado?">
+                            <div class="text-danger"
+                                *ngIf="patientForm.get('duenotelefono')?.hasError('required') && patientForm.get('duenotelefono')?.touched">
+                                <span>El dueño del telefono del paciente <strong>es obligatorio*</strong></span>
+                            </div>
+                        </div>
+                        <!-- Etnia -->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Etnia:</label>
+                            <select class="form-select form-control form-control-lg" formControlName="etnia">
+                                <option value="Ladino">Ladino</option>
+                                <option value="Indigena ">Indígena</option>
+                                <option value="Xinca">Xinca</option>
+                                <option value="Garifuna">Garifuna</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <!-- Ambientes de casa -->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Ambientes de su casa:</label>
+                            <div class="form-check d-flex mb-2" *ngFor="let ambiente of ambientesCasa">
+                                <input class="form-check-input me-2" type="checkbox" [value]="ambiente"
+                                    (change)="onCheckboxChange($event)"
+                                    [checked]="ambientesCasaSeleccionados.includes(ambiente)">
+                                <label class="form-check-label">
+                                    {{ ambiente }}
+                                </label>
+                            </div>
+                        </div>
+
+
+                        <!-- Piso -->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Piso:</label>
+                            <select class="form-select form-control form-control-lg" formControlName="piso">
+                                <option value="Ceramico">Ceramico</option>
+                                <option value="Loza">Loza</option>
+                                <option value="Cemento">Cemento</option>
+                                <option value="Madera">Madera</option>
+                                <option value="Tierra">Tierra</option>
+                                <option value="Suelo">Suelo</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <!-- Pared -->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Pared:</label>
+                            <select class="form-select form-control form-control-lg" formControlName="pared">
+                                <option value="Block">Block</option>
+                                <option value="Lamina">Lamina</option>
+                                <option value="Ladrillo">Ladrillo</option>
+                                <option value="Madera">Madera</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <!-- Techo -->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Techo:</label>
+                            <select class="form-select form-control form-control-lg" formControlName="techo">
+                                <option value="Terraza">Terraza</option>
+                                <option value="Lamina">Lamina</option>
+                                <option value="Madera">Madera</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <!-- Sanitario -->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Sanitario:</label>
+                            <select class="form-select form-control form-control-lg" formControlName="sanitario">
+                                <option value="Inodoro">Inodoro</option>
+                                <option value="Letrina">Letrina</option>
+                            </select>
+                        </div>
+                        <!-- Agua -->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Agua:</label>
+                            <select class="form-select form-control form-control-lg" formControlName="agua">
+                                <option value="Potable">Potable</option>
+                                <option value="Pozo">Pozo</option>
+                                <option value="Rio">Río</option>
+                                <option value="Entubada">Entubada</option>
+                                <option value="Compramos">Compramos</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <!-- Basura -->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Basura:</label>
+                            <select class="form-select form-control form-control-lg" formControlName="basura">
+                                <option value="Recolector">Recolector</option>
+                                <option value="Barranco">Barranco</option>
+                                <option value="Quemada">Quemada</option>
+                            </select>
+                        </div>
+                        <!-- Disposición De Excreta -->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Disposición De Excretas:</label>
+                            <select class="form-select form-control form-control-lg"
+                                formControlName="dispocionexcretas">
+                                <option value="Drenaje">Drenaje</option>
+                                <option value="Fosa Setica">Fosa Sética</option>
+                            </select>
+                        </div>
+
+                        <!-- Estado de atencion del paciente -->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Estado de atención del paciente:</label>
+                            <div class="form-check d-flex mb-2">
+                                <input class="form-check-input me-2" type="radio" formControlName="estadopaciente"
+                                    value="En espera" id="radioEspera">
+                                <label class="form-check-label" for="radioEspera">En espera</label>
+                            </div>
+                            <div class="form-check d-flex mb-2">
+                                <input class="form-check-input me-2" type="radio" formControlName="estadopaciente"
+                                    value="Atendido" id="radioAtendido">
+                                <label class="form-check-label" for="radioAtendido">Atendido</label>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <button routerLink="/list-patient" class="btn btn-secondary btn-lg float-start">Volver</button>
+                            <button type="submit" [disabled]="patientForm.invalid"
+                                class="btn btn-success btn-lg float-end">Aceptar</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+<div class="container mt-5">
+    <button class="btn button-home-admin-page float-end" routerLink="/home">Volver a menú</button>
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="titulo">LISTADO DE USUARIOS</span>
+                    <button class="btn btn-success float-end" routerLink="/create-user">Nuevo</button>
+                    
+                    <table *ngIf="listUsuarios.length > 0" class="table table-striped mt-3">
+                        <thead>
+                            <tr>
+                                <th scope="col">Usuario</th>
+                                <th scope="col">Tipo de permiso</th>
+                                <th scope="col">Contraseña</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let usuarios of listUsuarios">
+                                <td> {{ usuarios.usuario}}</td>
+                                <td>{{ usuarios.tipopermiso}}</td>
+                                <td>{{ usuarios.contrasena}}</td>
+                                <td [ngClass]="{
+                                     'text-danger': usuarios.estadousuario === 'Inactivo',
+                                                'text-success': usuarios.estadousuario === 'Activo'
+                                }">{{ usuarios.estadousuario}}</td>
+                                <td>
+                                    <i (click) = "eliminarUsuario(usuarios._id)" class="fas fa-solid fa-trash"></i>
+                                    <i [routerLink]="['/edit-user',usuarios._id]" class="fas fa-solid fa-pen-to-square"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="listUsuarios.length == 0"> No hay usuarios para mostrar</h5>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

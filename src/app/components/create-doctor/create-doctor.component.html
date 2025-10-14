@@ -1,0 +1,46 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="titulo">{{tituloDoctor | uppercase}}</span>
+                    <!-- para conectas los formularios -->
+                    <form class="mt-3" [formGroup]="doctorForm" (ngSubmit)="agregarDoctor()">
+                        <div class="mb-3">
+                            <!-- enlazar las variables  -->
+                            <input type="text" formControlName="nombredoctor" class="form-control form-control-lg"
+                                placeholder="Doctor">
+                            <div class="text-danger"
+                                *ngIf="doctorForm.get('nombredoctor')?.hasError('required') && doctorForm.get('nombredoctor')?.touched">
+                                <span>El nombre del doctor <strong>es obligatorio*</strong></span>
+                            </div>
+                        </div>
+                        <!-- Especialidad-->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Seleccione especialidad:</label>
+                            <select class="form-select form-control form-control-lg" formControlName="especialidad">
+                                <option value="Medico General">Medico General</option>
+                                <option value="Psicología">Psicología</option>
+                                <option value="Nutrición">Nutrición</option>
+                                <option value="Dentista">Dentista</option>
+                            </select>
+                        </div>
+                        <!-- Estado de Atención-->
+                        <div class="mb-3">
+                            <label class="d-flex mb-2">Estado de Atención:</label>
+                            <select class="form-select form-control form-control-lg" formControlName="estado">
+                                <option value="Activo">Activo</option>
+                                <option value="Inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <button routerLink="/list-doctor" class="btn btn-secondary btn-lg float-start">Volver</button>
+                            <button type="submit" [disabled]="doctorForm.invalid"
+                                class="btn btn-success btn-lg float-end">Aceptar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
