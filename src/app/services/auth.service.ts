@@ -8,7 +8,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:4000/api/auth'; // cambia tu puerto
+  private apiUrl = 'https://jornada-frontend.vercel.app/api/auth'; // cambia tu puerto
 
   constructor(private http: HttpClient, private router: Router) {}
 
