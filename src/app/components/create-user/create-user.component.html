@@ -9,7 +9,7 @@
                         <div class="mb-3">
                             <!-- enlazar las variables  -->
                             <input type="text" formControlName="usuario" class="form-control form-control-lg"
-                                placeholder="Usuario">
+                                placeholder="Usuario (se recomienda no agregar espacios)">
                             <div class="text-danger"
                                 *ngIf="userForm.get('usuario')?.hasError('required') && userForm.get('usuario')?.touched">
                                 <span>El nombre del usuario <strong>es obligatorio*</strong></span>
