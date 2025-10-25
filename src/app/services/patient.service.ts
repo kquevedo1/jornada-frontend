@@ -7,7 +7,7 @@ import { Patient } from '../models/patient';
     providedIn: 'root'
 })
 export class PatientService {
-    url = 'http://localhost:4000/api/pacientes/';
+    url = 'https://jornada-backend-wsb4.onrender.com/api/pacientes/';
 
     constructor(private http: HttpClient) { }
 

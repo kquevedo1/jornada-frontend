@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DoctorService {
-  url = 'http://localhost:4000/api/doctores/';
+  url = 'https://jornada-backend-wsb4.onrender.com/api/doctores/';
 
   constructor(private http: HttpClient) { }
 
