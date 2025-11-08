@@ -10,24 +10,29 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-usuario: string = '';
+  usuario: string = '';
   contrasena: string = '';
   errorMsg: string = '';
+  cargando: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
     private authService: AuthService
-  ) { 
-    
+  ) {
+
   }
 
-  ngOnInit(): void {
-  }
-   login() {
+  ngOnInit(): void { }
+  login() {
+    this.errorMsg = '';
+    this.cargando = true;
+
     this.authService.login(this.usuario, this.contrasena).subscribe({
       next: (res) => {
+        this.cargando = false; 
+
         const rol = res.rol;
         // redirigir según el rol
         if (rol === 'SuperAdmin') {
@@ -41,7 +46,8 @@ usuario: string = '';
         }
       },
       error: (err) => {
-        this.errorMsg = err.error.msg;
+        this.cargando = false;
+        this.errorMsg = err.error.msg ||'Error al iniciar sesión';
       }
     });
   }
