@@ -14,6 +14,7 @@ listPacientes: Patient[] = [];
 // filtros
 filtroEspecialidad: string = '';
 filtroEstado: string = '';
+filtroMedicamento: string = '';
 especialidades: string[] = [];
 
   constructor(private _pacienteService: PatientService,
@@ -55,7 +56,10 @@ especialidades: string[] = [];
     const coincideEstado = this.filtroEstado === '' 
       || paciente.estadopaciente === this.filtroEstado;
 
-    return coincideEspecialidad && coincideEstado;
+      const coincideMedicamento = this.filtroMedicamento === '' 
+      || paciente.entregamedicina === this.filtroMedicamento;
+
+    return coincideEspecialidad && coincideEstado && coincideMedicamento;
   });
 }
 

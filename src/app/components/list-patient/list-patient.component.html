@@ -16,6 +16,14 @@
             <option value="Atendido">Atendido</option>
         </select>
     </div>
+    <div class="col-md-4">
+        <label class="mb-2">Entrega medicamentos:</label>
+        <select class="form-select" [(ngModel)]="filtroMedicamento">
+            <option value="">Todos los estados</option>
+            <option value="Sin entregar">Sin entregar</option>
+            <option value="Entregados">Entregados</option>
+        </select>
+    </div>
 </div>
 </div>
 
@@ -33,6 +41,7 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Especialidad</th>
                                 <th scope="col">Estado de Atención</th>
+                                <th scope="col">Estado de entrega de médicina</th>
                                 <th scope="col"></th>
                             </tr>
                         </thead>
@@ -48,8 +57,13 @@
                                                 }">
                                     {{ paciente.estadopaciente }}
                                 </td>
-
-
+                                <td [ngClass]="{
+                                                'text-danger':  paciente.entregamedicina === 'Sin entregar',
+                                                'text-success': paciente.entregamedicina === 'Entregados'
+                                                }">
+                                    {{ paciente.entregamedicina }}
+                                </td>
+                                <!-- <td>{{ paciente.entregamedicina}}</td> -->
                                 <td>
                                     <i (click)="eliminarPaciente(paciente._id)" class="fas fa-solid fa-trash"></i>
                                     <i [routerLink]="['/edit-patient',paciente._id]"

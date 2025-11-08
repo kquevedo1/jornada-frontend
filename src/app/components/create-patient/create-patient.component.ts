@@ -46,6 +46,9 @@ export class CreatePatientComponent implements OnInit {
       agua: ['', Validators.required],
       basura: ['', Validators.required],
       dispocionexcretas: ['', Validators.required],
+      observaciones:[''],
+      tratamiento:[''],
+      entregamedicina: ['', Validators.required],
       estadopaciente: ['', Validators.required],
     })
     this.id = this.aRouter.snapshot.paramMap.get('id');
@@ -89,6 +92,9 @@ export class CreatePatientComponent implements OnInit {
       agua: this.patientForm.get('agua')?.value,
       basura: this.patientForm.get('basura')?.value,
       dispocionexcretas: this.patientForm.get('dispocionexcretas')?.value,
+      observaciones: this.patientForm.get('observaciones')?.value,
+      tratamiento: this.patientForm.get('tratamiento')?.value,
+      entregamedicina:this.patientForm.get('entregamedicina')?.value,
       estadopaciente: this.patientForm.get('estadopaciente')?.value,
     }
     if (this.id !== null) {
@@ -140,6 +146,9 @@ export class CreatePatientComponent implements OnInit {
           agua: data.agua,
           basura: data.basura,
           dispocionexcretas: data.dispocionexcretas,
+          observaciones:data.observaciones,
+          tratamiento:data.tratamiento,
+          entregamedicina:data.entregamedicina?.trim(),
           estadopaciente: data.estadopaciente?.trim(),
         });
         const checkArray = this.patientForm.get('ambientecasa') as FormArray;

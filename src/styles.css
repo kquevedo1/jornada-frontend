@@ -63,3 +63,7 @@ background-color: white !important;
 .button-home-admin-page{
     background-color: rgb(224, 221, 221) !important;
 }
+.label-color-text-teal{
+    color:#15434E;
+    font-weight: bold;
+}
