@@ -9,6 +9,7 @@ export class Patient {
     escolaridad: string;
     telefono: number;
     duenotelefono: string;
+    mediocontacto: string;
     etnia: string;
     ambientecasa: string[];
     piso: string;
@@ -31,6 +32,7 @@ export class Patient {
     escolaridad: string,
     telefono: number,
     duenotelefono: string,
+    mediocontacto:string,
     etnia: string,
     ambientecasa: string[],
     piso: string,
@@ -51,6 +53,7 @@ export class Patient {
         this.escolaridad=escolaridad;
         this.telefono=telefono;
         this.duenotelefono=duenotelefono;
+        this.mediocontacto=mediocontacto;
         this.etnia=etnia;
         this.ambientecasa=ambientecasa;
         this.piso=piso;
