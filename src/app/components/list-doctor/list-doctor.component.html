@@ -5,6 +5,8 @@
                 <div class="card-body text-center">
                     <span class="titulo">LISTADO DE DOCTORES</span>
                     <button class="btn btn-success float-end" routerLink="/create-doctor">Nuevo</button>
+
+                    <!-- Tabla de doctores -->
                     <table *ngIf="listDoctores.length > 0" class="table table-striped mt-3">
                         <thead>
                             <tr>
@@ -16,24 +18,57 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let doctor of listDoctores">
-                                <td> {{ doctor.nombredoctor}}</td>
-                                <td>{{ doctor.especialidad}}</td>
+                                <td>{{ doctor.nombredoctor }}</td>
+                                <td>{{ doctor.especialidad }}</td>
                                 <td [ngClass]="{
-                                                'text-danger': doctor.estado === 'Inactivo',
-                                                'text-success': doctor.estado === 'Activo'
-                                                }">
-                                {{ doctor.estado}}
-                            </td>
+                    'text-danger': doctor.estado === 'Inactivo',
+                    'text-success': doctor.estado === 'Activo'}">
+                                    {{ doctor.estado }}
+                                </td>
                                 <td>
-                                    <i (click) = "eliminarDoctor(doctor._id)" class="fas fa-solid fa-trash"></i>
-                                    <i [routerLink]="['/edit-doctor',doctor._id]" class="fas fa-solid fa-pen-to-square"></i>
+                                    <!-- Botón eliminar con modal (convertimos id a string) -->
+                                    <i (click)="abrirModal(doctor._id!.toString())"
+                                        class="fas fa-solid fa-trash text-danger" style="cursor: pointer;"
+                                        title="Eliminar doctor"></i>
+
+                                    <!-- Botón editar -->
+                                    <i [routerLink]="['/edit-doctor', doctor._id]"
+                                        class="fas fa-solid fa-pen-to-square text-primary"
+                                        style="cursor: pointer; margin-left: 10px;" title="Editar doctor"></i>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="listDoctores.length == 0"> No hay doctores para mostrar</h5>
-                </div>
 
+                    <!-- Mensaje cuando no hay doctores -->
+                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="listDoctores.length == 0">
+                        No hay doctores para mostrar
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================
+     MODAL DE CONFIRMACIÓN
+================================ -->
+<div class="modal fade" id="confirmModalDoctor" tabindex="-1" aria-labelledby="confirmModalDoctorLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header navar-font text-white">
+                <h5 class="modal-title" id="confirmModalDoctorLabel">Eliminar Doctor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas eliminar este doctor?
+                <br />
+                <strong>Esta acción no se puede deshacer.</strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" (click)="confirmarEliminar()">Eliminar</button>
             </div>
         </div>
     </div>

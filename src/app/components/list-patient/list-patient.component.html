@@ -1,30 +1,30 @@
 <!-- filtros -->
 <div class="container mt-5">
-<div class="row mt-3 mb-3 justify-content-center">
-    <div class="col-md-4">
-        <label class="mb-2">Especialidad:</label>
-        <select class="form-select" [(ngModel)]="filtroEspecialidad">
-            <option value="">Todas las especialidades</option>
-            <option *ngFor="let esp of especialidades" [value]="esp">{{ esp }}</option>
-        </select>
+    <div class="row mt-3 mb-3 justify-content-center">
+        <div class="col-md-4">
+            <label class="mb-2">Especialidad:</label>
+            <select class="form-select" [(ngModel)]="filtroEspecialidad">
+                <option value="">Todas las especialidades</option>
+                <option *ngFor="let esp of especialidades" [value]="esp">{{ esp }}</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="mb-2">Estado:</label>
+            <select class="form-select" [(ngModel)]="filtroEstado">
+                <option value="">Todos los estados</option>
+                <option value="En espera">En espera</option>
+                <option value="Atendido">Atendido</option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label class="mb-2">Entrega medicamentos:</label>
+            <select class="form-select" [(ngModel)]="filtroMedicamento">
+                <option value="">Todos los estados</option>
+                <option value="Sin entregar">Sin entregar</option>
+                <option value="Entregados">Entregados</option>
+            </select>
+        </div>
     </div>
-    <div class="col-md-4">
-        <label class="mb-2">Estado:</label>
-        <select class="form-select" [(ngModel)]="filtroEstado">
-            <option value="">Todos los estados</option>
-            <option value="En espera">En espera</option>
-            <option value="Atendido">Atendido</option>
-        </select>
-    </div>
-    <div class="col-md-4">
-        <label class="mb-2">Entrega medicamentos:</label>
-        <select class="form-select" [(ngModel)]="filtroMedicamento">
-            <option value="">Todos los estados</option>
-            <option value="Sin entregar">Sin entregar</option>
-            <option value="Entregados">Entregados</option>
-        </select>
-    </div>
-</div>
 </div>
 
 <!-- toda la lista -->
@@ -35,6 +35,7 @@
                 <div class="card-body text-center">
                     <span class="titulo">LISTADO DE PACIENTES</span>
                     <button class="btn btn-success float-end" routerLink="/create-patient">Nuevo</button>
+
                     <table *ngIf="listPacientes.length > 0" class="table table-striped mt-3">
                         <thead>
                             <tr>
@@ -47,35 +48,61 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let paciente of pacientesFiltrados()">
-                                <!-- <tr *ngFor="let paciente of listPacientes"> -->
-                                <td> {{ paciente.nombrepaciente}}</td>
-                                <td>{{ paciente.especialidadpaciente}}</td>
-                                <!-- <td>{{ paciente.estadopaciente}}</td> -->
+                                <td>{{ paciente.nombrepaciente }}</td>
+                                <td>{{ paciente.especialidadpaciente }}</td>
                                 <td [ngClass]="{
-                                                'text-danger': paciente.estadopaciente === 'En espera',
-                                                'text-success': paciente.estadopaciente === 'Atendido'
-                                                }">
+                    'text-danger': paciente.estadopaciente === 'En espera',
+                    'text-success': paciente.estadopaciente === 'Atendido'}">
                                     {{ paciente.estadopaciente }}
                                 </td>
                                 <td [ngClass]="{
-                                                'text-danger':  paciente.entregamedicina === 'Sin entregar',
-                                                'text-success': paciente.entregamedicina === 'Entregados'
-                                                }">
+                    'text-danger': paciente.entregamedicina === 'Sin entregar',
+                    'text-success': paciente.entregamedicina === 'Entregados'}">
                                     {{ paciente.entregamedicina }}
                                 </td>
-                                <!-- <td>{{ paciente.entregamedicina}}</td> -->
                                 <td>
-                                    <i (click)="eliminarPaciente(paciente._id)" class="fas fa-solid fa-trash"></i>
-                                    <i [routerLink]="['/edit-patient',paciente._id]"
-                                        class="fas fa-solid fa-pen-to-square"></i>
+                                    <!-- Botón eliminar con conversión a string -->
+                                    <i (click)="abrirModal(paciente._id!.toString())"
+                                        class="fas fa-solid fa-trash text-danger" style="cursor: pointer;"
+                                        title="Eliminar paciente"></i>
+
+                                    <!-- Botón editar -->
+                                    <i [routerLink]="['/edit-patient', paciente._id]"
+                                        class="fas fa-solid fa-pen-to-square text-primary"
+                                        style="cursor: pointer; margin-left: 10px;" title="Editar paciente"></i>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="listPacientes.length == 0"> No hay pacientes
-                        para mostrar</h5>
-                </div>
 
+                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="listPacientes.length == 0">
+                        No hay pacientes para mostrar
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================================
+     MODAL DE CONFIRMACIÓN
+================================ -->
+<div class="modal fade" id="confirmModalPaciente" tabindex="-1" aria-labelledby="confirmModalPacienteLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header navar-font text-white">
+                <h5 class="modal-title" id="confirmModalPacienteLabel">Eliminar Paciente</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas eliminar este paciente?
+                <br />
+                <strong>Esta acción no se puede deshacer.</strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" (click)="confirmarEliminar()">Eliminar</button>
             </div>
         </div>
     </div>

@@ -43,6 +43,8 @@ export class LoginComponent implements OnInit {
           this.router.navigate(['/list-patient']);
         } else if (rol === 'PermisoGeneral') {
           this.router.navigate(['/create-patient']);
+        }else if (rol ==='PermisoFarmacia'){
+            this.router.navigate(['/list-patient']);
         }
       },
       error: (err) => {
@@ -51,8 +53,6 @@ export class LoginComponent implements OnInit {
       }
     });
   }
-
-
 }
 
 

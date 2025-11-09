@@ -6,7 +6,8 @@
                 <div class="card-body text-center">
                     <span class="titulo">LISTADO DE USUARIOS</span>
                     <button class="btn btn-success float-end" routerLink="/create-user">Nuevo</button>
-                    
+
+                    <!-- Tabla de usuarios -->
                     <table *ngIf="listUsuarios.length > 0" class="table table-striped mt-3">
                         <thead>
                             <tr>
@@ -19,23 +20,60 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let usuarios of listUsuarios">
-                                <td> {{ usuarios.usuario}}</td>
-                                <td>{{ usuarios.tipopermiso}}</td>
-                                <td>{{ usuarios.contrasena}}</td>
+                                <td>{{ usuarios.usuario }}</td>
+                                <td>{{ usuarios.tipopermiso }}</td>
+                                <td>{{ usuarios.contrasena }}</td>
                                 <td [ngClass]="{
-                                     'text-danger': usuarios.estadousuario === 'Inactivo',
-                                                'text-success': usuarios.estadousuario === 'Activo'
-                                }">{{ usuarios.estadousuario}}</td>
+                    'text-danger': usuarios.estadousuario === 'Inactivo',
+                    'text-success': usuarios.estadousuario === 'Activo'}">
+                                    {{ usuarios.estadousuario }}
+                                </td>
                                 <td>
-                                    <i (click) = "eliminarUsuario(usuarios._id)" class="fas fa-solid fa-trash"></i>
-                                    <i [routerLink]="['/edit-user',usuarios._id]" class="fas fa-solid fa-pen-to-square"></i>
+                                    <!-- Botón eliminar con modal -->
+                                <i (click)="abrirModal(usuarios._id!.toString())" class="fas fa-solid fa-trash text-danger" style="cursor: pointer;" title="Eliminar usuarios"></i>
+
+
+                                    <!-- Botón editar -->
+                                    <i [routerLink]="['/edit-user', usuarios._id]"
+                                        class="fas fa-solid fa-pen-to-square text-primary"
+                                        style="cursor: pointer; margin-left: 10px;" title="Editar usuario"></i>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="listUsuarios.length == 0"> No hay usuarios para mostrar</h5>
-                </div>
 
+                    <!-- Mensaje cuando no hay usuarios -->
+                    <h5 style="text-align: start; margin-top: 10px;" *ngIf="listUsuarios.length == 0">
+                        No hay usuarios para mostrar
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===========================================
+     MODAL DE CONFIRMACIÓN DE ELIMINACIÓN
+=========================================== -->
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header navar-font text-white">
+                <h5 class="modal-title" id="confirmModalLabel">Eliminar Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas eliminar este usuario?
+                <br />
+                <strong>Esta acción no se puede deshacer.</strong>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancelar
+                </button>
+                <button type="button" class="btn btn-success" (click)="confirmarEliminar()">
+                    Eliminar
+                </button>
             </div>
         </div>
     </div>
